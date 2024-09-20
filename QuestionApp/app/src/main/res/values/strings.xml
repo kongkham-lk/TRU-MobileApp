@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">QuestionApp</string>
+    <string name="ask">Do you love building mobile app?</string>
+    <string name="btnYes">Yes</string>
+    <string name="btnNo">No</string>
+</resources>
