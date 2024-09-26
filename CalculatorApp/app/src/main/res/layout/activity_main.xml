@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:layout_centerVertical="true"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_margin="0dp"
+    android:background="@drawable/gradient_background"
     tools:context=".MainActivity">
 
     <EditText
@@ -16,12 +21,12 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/txtInput_num1"
-        android:inputType="text"
+        android:inputType="number"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtInput_num2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_margin="0dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/lightGrey"
+        />
 
     <EditText
         android:id="@+id/txtInput_num2"
@@ -31,73 +36,94 @@
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/txtInput_num2"
-        android:inputType="text"
+        android:inputType="number"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="20dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/lightGrey"
+        />
 
-    <Button
-        android:id="@+id/btn_add"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="5dp"
-        android:padding="0sp"
-        android:text="@string/btn_add"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_minus"
-        app:layout_constraintHorizontal_bias="0.50"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtInput_num2" />
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="0dp">
 
-    <Button
-        android:id="@+id/btn_multiply"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="5dp"
-        android:padding="0sp"
-        android:paddingBottom="10dp"
-        android:text="@string/btn_multiply"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_divide"
-        app:layout_constraintStart_toEndOf="@+id/btn_minus"
-        app:layout_constraintTop_toBottomOf="@+id/txtInput_num2" />
+        <Button
+            android:id="@+id/btn_clear"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="5dp"
+            android:padding="0sp"
+            android:text="@string/btn_clear"
+            android:textSize="16sp"
+            app:cornerRadius="15dp"
+            android:backgroundTint="@color/button_background"
+            android:textColor="@color/button_text"
+            />
 
-    <Button
-        android:id="@+id/btn_minus"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="5dp"
-        android:padding="0dp"
-        android:paddingBottom="10dp"
-        android:text="@string/btn_minus"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_multiply"
-        app:layout_constraintStart_toEndOf="@+id/btn_add"
-        app:layout_constraintTop_toBottomOf="@+id/txtInput_num2" />
+        <Button
+            android:id="@+id/btn_add"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="5dp"
+            android:padding="0sp"
+            android:text="@string/btn_add"
+            android:textSize="16sp"
+            app:cornerRadius="15dp"
+            android:backgroundTint="@color/darkGrey"
+            android:textColor="@color/white"
+            />
 
-    <Button
-        android:id="@+id/btn_divide"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="70dp"
-        android:padding="0sp"
-        android:text="@string/btn_divide"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_multiply"
-        app:layout_constraintTop_toBottomOf="@+id/txtInput_num2" />
+        <Button
+            android:id="@+id/btn_minus"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="5dp"
+            android:padding="0dp"
+            android:text="@string/btn_minus"
+            android:textSize="16sp"
+            app:cornerRadius="15dp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/darkGrey"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:id="@+id/btn_multiply"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="0dp"
+            android:layout_marginStart="5dp"
+            android:text="@string/btn_multiply"
+            android:textSize="16sp"
+            app:cornerRadius="15dp"
+            android:backgroundTint="@color/darkGrey"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:id="@+id/btn_divide"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="5dp"
+            android:padding="0sp"
+            android:text="@string/btn_divide"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:cornerRadius="15dp"
+            android:backgroundTint="@color/darkGrey"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txt_result"
@@ -106,19 +132,9 @@
         android:layout_marginTop="80dp"
         android:hint="@string/txt_result"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtInput_num2" />
+        android:layout_margin="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/lightGrey"
+        />
 
-    <Button
-        android:id="@+id/btn_clear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/btn_clear"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_result" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

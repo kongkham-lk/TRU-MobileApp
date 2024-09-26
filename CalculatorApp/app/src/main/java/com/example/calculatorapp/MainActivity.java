@@ -1,10 +1,9 @@
 package com.example.calculatorapp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                btnClear.setEnabled(enableBtnClear(numTxt1, numTxt2));
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                enableBtnClear(btnClear, numTxt1, numTxt2);
             }
         });
 
@@ -68,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                btnClear.setEnabled(enableBtnClear(numTxt1, numTxt2));
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                enableBtnClear(btnClear, numTxt1, numTxt2);
             }
         });
 
@@ -115,11 +114,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean enableBtnClear(EditText numTxt1, EditText numTxt2) {
-        if (numTxt1.getText().toString() == "" && numTxt2.getText().toString() == "")
-            return false;
+    private void enableBtnClear(Button btnClear, EditText numTxt1, EditText numTxt2) {
+        if (numTxt1.getText().toString().matches("") && numTxt2.getText().toString().matches(""))
+            btnClear.setEnabled(false);
         else
-            return true;
+            btnClear.setEnabled(true);
     }
 
     private void computeNumbers(EditText numTxt1, EditText numTxt2, TextView result, OPERATION operation) {
