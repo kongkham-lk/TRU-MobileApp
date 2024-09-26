@@ -1,8 +1,8 @@
 package com.example.calculatorapp;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         df.setMaximumFractionDigits(4);
 
         btnClear.setEnabled(false);
+
+        numTxt1.setFilters(new InputFilter[]{new DecimalInputFilter()});
 
         numTxt1.addTextChangedListener(new TextWatcher() {
             @Override
