@@ -2,6 +2,10 @@
     <string name="app_name">CalculatorApp</string>
     <string name="txtInput_num1">Enter Num #1</string>
     <string name="txtInput_num2">Enter Num #2</string>
-    <string name="btn_add">Add</string>
+    <string name="btn_add">+</string>
+    <string name="btn_minus">-</string>
+    <string name="btn_multiply">x</string>
+    <string name="btn_divide">/</string>
     <string name="txt_result">Result</string>
+    <string name="btn_clear">Clear</string>
 </resources>
