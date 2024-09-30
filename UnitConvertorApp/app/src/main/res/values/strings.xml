@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Unit Convertor App</string>
+    <string name="title">Unit Convertor</string>
+    <string name="banner_description">Temperature Conversion Banner</string>
+    <string name="label_from">From</string>
+    <string name="label_to">To</string>
+    <string name="label_value">Value</string>
+    <string name="input_unit">Enter Celsius or Fahrenheit</string>
+    <string name="input_value">Enter value</string>
+    <string name="btn">Convert</string>
+    <string name="result">Reult</string>
 </resources>
