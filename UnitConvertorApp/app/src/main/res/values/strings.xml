@@ -9,4 +9,5 @@
     <string name="input_value">Enter value</string>
     <string name="btn">Convert</string>
     <string name="result">Reult</string>
+    <string name="toastError">Please Enter Different Temperature Unit!</string>
 </resources>
