@@ -3,6 +3,7 @@ package com.example.unitconvertorapp;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    String[] unitType = { "Farenhein", "Celsius" };
+    String[] unitType = { "Fahrenheit", "Celsius" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                checkUnitInput(inputFrom, inputTo, btnConvert);
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
         });
 
@@ -60,20 +61,56 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                checkUnitInput(inputFrom, inputTo, btnConvert);
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
+            }
+        });
+
+        inputValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
+            }
+        });
+
+        btnConvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String from = inputFrom.getText().toString();
+                String to = inputTo.getText().toString();
+                int value = Integer.parseInt(inputValue.getText().toString());
+                if (from.equals(unitType[0]) && to.equals(unitType[1]))
+                    result.setText((value - 32) * 5 / 9);
+                else
+                    result.setText((value * 9 / 5) + 32);
+                inputFrom.setText("");
+                inputTo.setText("");
+                inputValue.setText("");
             }
         });
     }
 
-    private void checkUnitInput(EditText inputFrom, EditText inputTo, Button btnConvert) {
+    private void checkUnitInput(EditText inputFrom, EditText inputTo, EditText inputValue, Button btnConvert) {
         String from = inputFrom.getText().toString();
         String to = inputTo.getText().toString();
-        if ((Arrays.asList(unitType).contains(from) || Arrays.asList(unitType).contains(to))) {
+        String value = inputValue.getText().toString();
+        if (!from.isEmpty() && !to.isEmpty() && (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to))) {
             if (!from.equals(to))
-                enableButton(btnConvert, true);
+                if (value.isEmpty())
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.toastMissingValueError), Toast.LENGTH_SHORT).show();
+                else
+                    enableButton(btnConvert, true);
             else {
-                if (Arrays.asList(unitType).contains(from) || Arrays.asList(unitType).contains(to))
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.toastError), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.toastSameUnitError), Toast.LENGTH_SHORT).show();
                 enableButton(btnConvert, false);
             }
         } else
