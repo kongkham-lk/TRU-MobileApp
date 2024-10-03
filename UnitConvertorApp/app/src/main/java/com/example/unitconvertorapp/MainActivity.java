@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         btnConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String from = inputFrom.getText().toString();
-                String to = inputTo.getText().toString();
+                String from = inputFrom.getText().toString().toLowerCase();
+                String to = inputTo.getText().toString().toLowerCase();
                 String value = inputValue.getText().toString();
                 int value_int = Integer.parseInt(value);
                 float output = 0;
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkUnitInput(EditText inputFrom, EditText inputTo, EditText inputValue, Button btnConvert) {
-        String from = inputFrom.getText().toString();
-        String to = inputTo.getText().toString();
+        String from = inputFrom.getText().toString().toLowerCase();
+        String to = inputTo.getText().toString().toLowerCase();
         String value = inputValue.getText().toString();
 
         if (from.isEmpty() || to.isEmpty()) {
@@ -86,13 +86,15 @@ public class MainActivity extends AppCompatActivity {
             if (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to)) {
                 if (value.isEmpty())
                     inputValue.setError(getResources().getString(R.string.toastMissingValueError));
-                if (!from.equals(to))
-                    enableButton(btnConvert, true);
-                else {
+                else if (from.equals(to))
                     Toast.makeText(MainActivity.this, getResources().getString(R.string.toastSameUnitError), Toast.LENGTH_SHORT).show();
-                    enableButton(btnConvert, false);
-                }
+                else
+                    enableButton(btnConvert, true);
             } else {
+                if (!Arrays.asList(unitType).contains(from))
+                    inputFrom.setError("Please Check The Spelling!");
+                if (!Arrays.asList(unitType).contains(to))
+                    inputTo.setError("Please Check The Spelling!");
                 enableButton(btnConvert, false);
             }
         }
