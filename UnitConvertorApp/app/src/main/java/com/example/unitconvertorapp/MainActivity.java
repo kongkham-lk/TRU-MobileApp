@@ -79,22 +79,22 @@ public class MainActivity extends AppCompatActivity {
 
         if (from.isEmpty() || to.isEmpty()) {
             if (!from.isEmpty() && to.isEmpty())
-                inputTo.setError(getResources().getString(R.string.toastMissingValueError));
+                inputTo.setError(getResources().getString(R.string.missingValueError));
             if (from.isEmpty() && !to.isEmpty())
-                inputFrom.setError(getResources().getString(R.string.toastMissingValueError));
+                inputFrom.setError(getResources().getString(R.string.missingValueError));
         } else {
             if (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to)) {
                 if (value.isEmpty())
-                    inputValue.setError(getResources().getString(R.string.toastMissingValueError));
+                    inputValue.setError(getResources().getString(R.string.missingValueError));
                 else if (from.equals(to))
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.toastSameUnitError), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.sameUnitError), Toast.LENGTH_SHORT).show();
                 else
                     enableButton(btnConvert, true);
             } else {
                 if (!Arrays.asList(unitType).contains(from))
-                    inputFrom.setError("Please Check The Spelling!");
+                    inputFrom.setError(getResources().getString(R.string.spellingError));
                 if (!Arrays.asList(unitType).contains(to))
-                    inputTo.setError("Please Check The Spelling!");
+                    inputTo.setError(getResources().getString(R.string.spellingError));
                 enableButton(btnConvert, false);
             }
         }
@@ -112,21 +112,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void checkSpelling(EditText inputFrom, EditText inputTo) {
-        String from = inputFrom.getText().toString();
-        String to = inputTo.getText().toString();
-
-        if (!from.isEmpty() && !Arrays.asList(unitType).contains(from))
-            inputFrom.setError("Please Check The Spelling!");
-        if (!to.isEmpty() && !Arrays.asList(unitType).contains(to))
-            inputTo.setError("Please Check The Spelling!");
-    }
-
     private TextWatcher getNewTextWatcher (EditText inputFrom, EditText inputTo, EditText inputValue, Button btnConvert) {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                checkSpelling(inputFrom, inputTo);
                 checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
 

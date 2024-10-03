@@ -9,6 +9,7 @@
     <string name="input_value">Enter value</string>
     <string name="btn">Convert</string>
     <string name="result">Reult</string>
-    <string name="toastSameUnitError">Please Enter Different Temperature Unit!</string>
-    <string name="toastMissingValueError">This Field Cannot Be Empty!</string>
+    <string name="sameUnitError">Please Enter Different Temperature Unit!</string>
+    <string name="missingValueError">This Field Cannot Be Empty!</string>
+    <string name="spellingError">Please Check The Spelling!</string>
 </resources>
