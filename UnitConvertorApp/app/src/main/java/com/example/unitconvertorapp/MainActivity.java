@@ -31,56 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         enableButton(btnConvert, false);
 
-        inputFrom.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                checkSpelling(inputFrom, inputTo);
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        inputTo.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                checkSpelling(inputFrom, inputTo);
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-
-        inputValue.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                checkSpelling(inputFrom, inputTo);
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+        TextWatcher newTextWatcher = getNewTextWatcher(inputFrom, inputTo, inputValue, btnConvert);
+        inputFrom.addTextChangedListener(newTextWatcher);
+        inputTo.addTextChangedListener(newTextWatcher);
+        inputValue.addTextChangedListener(newTextWatcher);
 
         btnConvert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,19 +43,30 @@ public class MainActivity extends AppCompatActivity {
                 String to = inputTo.getText().toString();
                 String value = inputValue.getText().toString();
                 int value_int = Integer.parseInt(value);
+                float output = 0;
 
-                if (from.equals(unitType[0]) && to.equals(unitType[1])) {
-                    String output = String.valueOf((float) (value_int - 32) * 5 / 9);
-                    result.setText(output);
-                }
-                else {
-                    String output = String.valueOf((float) (value_int * 9 / 5) + 32);
-                    result.setText(output);
-                }
+                if (from.equals(unitType[0]) && to.equals(unitType[1]))
+                    output = (float) (value_int - 32) * 5 / 9;
+                else
+                    output = (float) (value_int * 9 / 5) + 32;
+
+                result.setText(String.valueOf(output));
+
+                // Temporary remove listener since we each field's input will be removed,
+                // prevent field check after convert is clicked
+                inputFrom.removeTextChangedListener(newTextWatcher);
+                inputTo.removeTextChangedListener(newTextWatcher);
+                inputValue.removeTextChangedListener(newTextWatcher);
 
                 inputFrom.setText("");
                 inputTo.setText("");
                 inputValue.setText("");
+
+                // Added listener again after each input field is reseted
+                inputFrom.addTextChangedListener(newTextWatcher);
+                inputTo.addTextChangedListener(newTextWatcher);
+                inputValue.addTextChangedListener(newTextWatcher);
+
                 enableButton(btnConvert, false);
             }
         });
@@ -153,5 +118,24 @@ public class MainActivity extends AppCompatActivity {
             inputFrom.setError("Please Check The Spelling!");
         if (!to.isEmpty() && !Arrays.asList(unitType).contains(to))
             inputTo.setError("Please Check The Spelling!");
+    }
+
+    private TextWatcher getNewTextWatcher (EditText inputFrom, EditText inputTo, EditText inputValue, Button btnConvert) {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkSpelling(inputFrom, inputTo);
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
     }
 }
