@@ -3,6 +3,7 @@ package com.example.unitconvertorapp;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 inputTo.setText("");
                 inputValue.setText("");
 
-                // Added listener again after each input field is reseted
+                // Added listener again after each input field is reset
                 inputFrom.addTextChangedListener(newTextWatcher);
                 inputTo.addTextChangedListener(newTextWatcher);
                 inputValue.addTextChangedListener(newTextWatcher);
@@ -77,26 +78,24 @@ public class MainActivity extends AppCompatActivity {
         String to = inputTo.getText().toString().toLowerCase();
         String value = inputValue.getText().toString();
 
-        if (from.isEmpty() || to.isEmpty()) {
-            if (!from.isEmpty() && to.isEmpty())
-                inputTo.setError(getResources().getString(R.string.missingValueError));
-            if (from.isEmpty() && !to.isEmpty())
-                inputFrom.setError(getResources().getString(R.string.missingValueError));
+        if (to.isEmpty())
+            inputTo.setError(getResources().getString(R.string.missingValueError));
+        if (from.isEmpty())
+            inputFrom.setError(getResources().getString(R.string.missingValueError));
+        if (value.isEmpty())
+            inputValue.setError(getResources().getString(R.string.missingValueError));
+
+        if (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to) && !value.isEmpty()) {
+            if (from.equals(to))
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.sameUnitError), Toast.LENGTH_SHORT).show();
+            else
+                enableButton(btnConvert, true);
         } else {
-            if (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to)) {
-                if (value.isEmpty())
-                    inputValue.setError(getResources().getString(R.string.missingValueError));
-                else if (from.equals(to))
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.sameUnitError), Toast.LENGTH_SHORT).show();
-                else
-                    enableButton(btnConvert, true);
-            } else {
-                if (!Arrays.asList(unitType).contains(from))
-                    inputFrom.setError(getResources().getString(R.string.spellingError));
-                if (!Arrays.asList(unitType).contains(to))
-                    inputTo.setError(getResources().getString(R.string.spellingError));
-                enableButton(btnConvert, false);
-            }
+            if (!to.isEmpty() && !Arrays.asList(unitType).contains(from))
+                inputFrom.setError(getResources().getString(R.string.spellingError));
+            if (!from.isEmpty() && !Arrays.asList(unitType).contains(to))
+                inputTo.setError(getResources().getString(R.string.spellingError));
+            enableButton(btnConvert, false);
         }
     }
 
