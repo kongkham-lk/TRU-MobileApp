@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
-    String[] unitType = { "Fahrenheit", "Celsius" };
+    String[] unitType = { "fahrenheit", "celsius" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         inputFrom.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                checkSpelling(inputFrom, inputTo);
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
 
             @Override
@@ -44,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
         });
 
         inputTo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                checkSpelling(inputFrom, inputTo);
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
 
             @Override
@@ -61,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
         });
 
         inputValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                checkSpelling(inputFrom, inputTo);
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
 
             @Override
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
         });
 
@@ -87,14 +87,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String from = inputFrom.getText().toString();
                 String to = inputTo.getText().toString();
-                int value = Integer.parseInt(inputValue.getText().toString());
-                if (from.equals(unitType[0]) && to.equals(unitType[1]))
-                    result.setText((value - 32) * 5 / 9);
-                else
-                    result.setText((value * 9 / 5) + 32);
+                String value = inputValue.getText().toString();
+                int value_int = Integer.parseInt(value);
+
+                if (from.equals(unitType[0]) && to.equals(unitType[1])) {
+                    String output = String.valueOf((float) (value_int - 32) * 5 / 9);
+                    result.setText(output);
+                }
+                else {
+                    String output = String.valueOf((float) (value_int * 9 / 5) + 32);
+                    result.setText(output);
+                }
+
                 inputFrom.setText("");
                 inputTo.setText("");
                 inputValue.setText("");
+                enableButton(btnConvert, false);
             }
         });
     }
@@ -103,19 +111,26 @@ public class MainActivity extends AppCompatActivity {
         String from = inputFrom.getText().toString();
         String to = inputTo.getText().toString();
         String value = inputValue.getText().toString();
-        if (!from.isEmpty() && !to.isEmpty() && (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to))) {
-            if (!from.equals(to))
+
+        if (from.isEmpty() || to.isEmpty()) {
+            if (!from.isEmpty() && to.isEmpty())
+                inputTo.setError(getResources().getString(R.string.toastMissingValueError));
+            if (from.isEmpty() && !to.isEmpty())
+                inputFrom.setError(getResources().getString(R.string.toastMissingValueError));
+        } else {
+            if (Arrays.asList(unitType).contains(from) && Arrays.asList(unitType).contains(to)) {
                 if (value.isEmpty())
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.toastMissingValueError), Toast.LENGTH_SHORT).show();
-                else
+                    inputValue.setError(getResources().getString(R.string.toastMissingValueError));
+                if (!from.equals(to))
                     enableButton(btnConvert, true);
-            else {
-                Toast.makeText(MainActivity.this, getResources().getString(R.string.toastSameUnitError), Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.toastSameUnitError), Toast.LENGTH_SHORT).show();
+                    enableButton(btnConvert, false);
+                }
+            } else {
                 enableButton(btnConvert, false);
             }
-        } else
-            enableButton(btnConvert, false);
-
+        }
     }
 
     private void enableButton(Button btnConvert, boolean isEnable) {
@@ -128,5 +143,15 @@ public class MainActivity extends AppCompatActivity {
             btnConvert.setBackgroundColor(getResources().getColor(R.color.blue));
             btnConvert.setTextColor(getResources().getColor(R.color.white));
         }
+    }
+
+    private void checkSpelling(EditText inputFrom, EditText inputTo) {
+        String from = inputFrom.getText().toString();
+        String to = inputTo.getText().toString();
+
+        if (!from.isEmpty() && !Arrays.asList(unitType).contains(from))
+            inputFrom.setError("Please Check The Spelling!");
+        if (!to.isEmpty() && !Arrays.asList(unitType).contains(to))
+            inputTo.setError("Please Check The Spelling!");
     }
 }
