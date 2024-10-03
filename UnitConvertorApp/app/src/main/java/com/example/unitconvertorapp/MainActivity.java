@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
+
             }
 
             @Override
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                checkUnitInput(inputFrom, inputTo, inputValue, btnConvert);
             }
         };
     }
