@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
                 String from = inputFrom.getText().toString().toLowerCase();
                 String to = inputTo.getText().toString().toLowerCase();
                 String value = inputValue.getText().toString();
-                int value_int = Integer.parseInt(value);
-                float output = 0;
+                double value_int = Integer.parseInt(value);
+                double output = 0;
 
                 if (from.equals(unitType[0]) && to.equals(unitType[1]))
-                    output = (float) (value_int - 32) * 5 / 9;
+                    output = (value_int - 32) * 5 / 9;
                 else
-                    output = (float) (value_int * 9 / 5) + 32;
+                    output = (value_int * 9 / 5) + 32;
 
                 result.setText(String.valueOf(output));
 
