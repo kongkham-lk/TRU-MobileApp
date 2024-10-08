@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Greeting App</string>
+    <string name="inputNameHint">Enter Name</string>
+    <string name="btnGreetLabel">Greet</string>
+    <string name="key_nameInput">nameInput</string>
+    <string name="btnBackLabel">Back</string>
+    <string name="greetingTextHint">Greet Here!!!</string>
+</resources>
