@@ -34,10 +34,16 @@ public class MainActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String input = inputSearch.getText().toString();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                String url = "https://www.google.com/search?q=" + input;
-                intent.setData(Uri.parse(url));
+                String actionType = "https://";
+                String searchEngine = "www.google.com";
+                String searchTopic = "/search?q=" + inputSearch.getText().toString();
+                String url = actionType + searchEngine + searchTopic;
+
+                // pass in ONE line:      Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                // pass in MULTIPLE line: Intent intent = new Intent();
+                //                        intent.setAction(Intent.ACTION_VIEW);
+                //                        intent.setData(Uri.parse(url));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
             }
         });
@@ -45,14 +51,13 @@ public class MainActivity extends AppCompatActivity {
         btnDial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String input = inputTel.getText().toString();
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                String tel = "tel:+1" + input;
-                intent.setData(Uri.parse(tel));
+                String actionType = "tel:";
+                String phoneNumber = inputTel.getText().toString();
+                String tel = actionType + phoneNumber;
+
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
                 try
                 {
-                    // Launch the Phone app's dialer with a phone
-                    // number to dial a call.
                     startActivity(intent);
                 }
                 catch (SecurityException s)
@@ -69,15 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 String subject = inputSubject.getText().toString();
                 String content = inputEmailContent.getText().toString();
 
+                // ACTION_SEND and ACTION_SENDTO is for sending data to other app
                 // .ACTION_SEND shows different app option, but
                 // .ACTION_SENDTO directly open default email app
                 Intent intentEmail = new Intent(Intent.ACTION_SEND);
                 intentEmail.putExtra(Intent.EXTRA_EMAIL, email); // need to pass in as string of array
                 intentEmail.putExtra(Intent.EXTRA_SUBJECT, subject);
                 intentEmail.putExtra(Intent.EXTRA_TEXT, content); // Not sure why this display on sharing text on app option display page
-//                intentEmail.setData(Uri.parse("mailto:")); // this seems not to work on filter out and won't show any option without setType()
-
-                intentEmail.setType("message/rfc822"); // require this in order to show what app type need to be display
+                // intentEmail.setData(Uri.parse("mailto:")); // this seems not to work on filter out and won't show any option without setType()
+                intentEmail.setType("message/rfc822"); // require this for showing different app option on share screen
 
                 try {
                     startActivity(Intent.createChooser(intentEmail, "Send email..."));
@@ -90,10 +95,11 @@ public class MainActivity extends AppCompatActivity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
+                String sharedText = "This is my text to send.";
+
+                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sharedText);
+                sendIntent.setType("text/plain"); // require this for showing different app option on share screen
 
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
